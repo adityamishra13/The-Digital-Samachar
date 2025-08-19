@@ -1,21 +1,43 @@
-const date = new Date();
-const year = date.getFullYear(); // Returns the four-digit year (e.g., 2025)
-const month = date.getMonth();   // Returns the month (0-11, where 0 is January)
-const day = date.getDate();      // Returns the day of the month (1-31)
-const fromdate=year+"-"+(month+1)+"-"+(day-1)
-fetch(`https://newsapi.org/v2/everything?q=india&from=${fromdate}&sortBy=publishedAt&apiKey=ade613c458dd4cc8b8d71c0633d11e53`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
+
+window.onload = () => {
+  const saved = localStorage.getItem("userSelection");
+  let url = "https://saurav.tech/NewsAPI/";
+  if (saved) {
+    const data = JSON.parse(saved);
+    console.log("User selection from localStorage:", data);
+
+    const mainChoice = data.main;
+    const subChoice = data.sub;
+
+    if (mainChoice === "everything") {
+      // console.log("Fetch news from source:", subChoice);
+      url += mainChoice + "/" + subChoice;
+    } else if (mainChoice === "top-headlines") {
+      // console.log("Fetch top headlines for category:", subChoice);
+      url += mainChoice + "/category/" + subChoice + "/in.json";
     }
-    return response.json();
-  })
-  .then(data => {
-        console.log(data)
-        let count=1
-        const newsarea = document.getElementById("newsarea");
-       
-        for (let source of data.articles) {
+    fetchnews(url)
+    const result = document.getElementById("result");
+    result.textContent = "Showing Results for : " + mainChoice + " -> " + subChoice
+  } else {
+    console.log("No selection found in localStorage");
+  }
+};
+
+function fetchnews(url) {
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data)
+      let count = 1
+      const newsarea = document.getElementById("newsarea");
+
+      for (let source of data.articles) {
 
         const newDiv = document.createElement("div");
         newDiv.innerText = count + ". ";
