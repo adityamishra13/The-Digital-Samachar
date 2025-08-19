@@ -14,7 +14,7 @@ window.onload = () => {
     if (mainChoice === "everything") {
       // console.log("Fetch news from source:", subChoice);
       url += mainChoice + "/" + subChoice;
-    result.textContent = "Showing Results for : Source " +" -> " + subChoice
+    result.textContent = "Showing results for : Source " +" -> " + subChoice
     } else if (mainChoice === "top-headlines") {
       // console.log("Fetch top headlines for category:", subChoice);
       url += mainChoice + "/category/" + subChoice + "/in.json";
