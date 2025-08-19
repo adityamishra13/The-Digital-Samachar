@@ -2,6 +2,8 @@
 window.onload = () => {
   const saved = localStorage.getItem("userSelection");
   let url = "https://saurav.tech/NewsAPI/";
+
+  const result = document.getElementById("result");
   if (saved) {
     const data = JSON.parse(saved);
     console.log("User selection from localStorage:", data);
@@ -12,13 +14,13 @@ window.onload = () => {
     if (mainChoice === "everything") {
       // console.log("Fetch news from source:", subChoice);
       url += mainChoice + "/" + subChoice;
+    result.textContent = "Showing Results for : Source " +" -> " + subChoice
     } else if (mainChoice === "top-headlines") {
       // console.log("Fetch top headlines for category:", subChoice);
       url += mainChoice + "/category/" + subChoice + "/in.json";
+    result.textContent = "Showing results for : " + mainChoice + " -> " + subChoice
     }
     fetchnews(url)
-    const result = document.getElementById("result");
-    result.textContent = "Showing Results for : " + mainChoice + " -> " + subChoice
   } else {
     console.log("No selection found in localStorage");
   }
