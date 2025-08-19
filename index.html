@@ -16,73 +16,87 @@
         <img src="back.png" alt="" id="logo">
     </div>
     <div id="newsarea">
-        <h4 style="color: white;font-size:20px;justify-self:center">Choose from the available options and get a Personalised Feed ! </h4>
-
-        <div id="choose">
-            <h3 style="margin:10px;">Select Category</h3>
-            <select id="mainSelect" style="margin: 10px;">
-                <option value="">-- Select One --</option>
-                <option value="everything">Source</option>
-                <option value="top-headlines">Top Headlines</option>
-            </select>
-
-            <h3 id="subTitle" style="display:none;margin:10px;">Select Option</h3>
-            <select id="subSelect" style="display:none; margin:10px;"></select>
-
-            <button id="saveBtn"
-                style="display:none;margin:10px;color:white; background-color:rgb(14, 51, 216);font-size:15px;padding:10px;">Save</button>
-
-            <p id="result" style="margin: 10px; font-size:20px;"></p>
-        </div>
 
     </div>
     <div id="footer"></div>
 
 
     <script>
-        const mainSelect = document.getElementById("mainSelect");
-        const subSelect = document.getElementById("subSelect");
-        const subTitle = document.getElementById("subTitle");
-        const saveBtn = document.getElementById("saveBtn");
-        const result = document.getElementById("result");
+        let url = "https://saurav.tech/NewsAPI/top-headlines/category/general/in.json"
+        fetchnews(url)
+        function fetchnews(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    let count = 1
+                    const newsarea = document.getElementById("newsarea");
 
-        const options = {
-            "everything": ["bbc-news.json", "cnn.json", "fox-news.json"],
-            "top-headlines": ["business", "entertainment", "health", "general", "science", "sports", "technology"]
-        };
+                    for (let source of data.articles) {
 
-        mainSelect.addEventListener("change", () => {
-            const selected = mainSelect.value;
-            if (selected) {
-                subSelect.innerHTML = "";
-                options[selected].forEach(opt => {
-                    const option = document.createElement("option");
-                    option.value = opt;
-                    option.textContent = opt;
-                    subSelect.appendChild(option);
+                        const newDiv = document.createElement("div");
+                        newDiv.innerText = count + ". ";
+                        newDiv.style.color = "green";
+                        newDiv.style.border = "1px green dotted"
+                        newDiv.style.margin = "10px"
+                        newDiv.style.padding = "10px"
+                        // newDiv.style.background="grey"
+
+                        let newstitle = document.createElement("div");
+                        newstitle.innerText = source.title;
+                        newstitle.style.color = "blue";
+                        newstitle.style.fontSize = "30px"
+
+                        let newsDesc = document.createElement("div")
+                        newsDesc.innerText = source.description + " - - - Author : " + source.author
+                        // newscontent.style = "italic";
+                        newsDesc.style.color = "black"
+                        newsDesc.style.fontSize = "15px"
+
+                        let newscontent = document.createElement("div");
+                        newscontent.innerText = source.content;
+                        newscontent.style.color = "black";
+                        newscontent.style.fontSize = "20px"
+                        if (newscontent.innerText.length > 105) {
+                            newscontent.innerText = newscontent.innerText.substr(0, 100) + "...";
+                        }
+
+
+                        let fullnews = document.createElement("a");
+                        fullnews.href = source.url;
+                        fullnews.textContent = "Read in Detail ..."
+                        fullnews.style.fontSize = "20px"
+                        fullnews.style.fontWeight = '900'
+                        fullnews.style.margin = "10px"
+
+                        let img = document.createElement("img");
+                        img.src = source.urlToImage;
+                        img.alt = "News Image";
+                        img.width = 100;
+
+                        newDiv.appendChild(newstitle)
+                        newDiv.appendChild(newsDesc)
+                        newDiv.appendChild(newscontent)
+                        newDiv.appendChild(img)
+                        newDiv.appendChild(fullnews)
+
+                        newDiv.style.backgroundColor = "white"
+
+                        newsarea.appendChild(newDiv);
+                        count++
+                    }
+
+
+                })
+                .catch(error => {
+                    console.error("Fetching error:", error);
                 });
-                subTitle.style.display = "block";
-                subSelect.style.display = "block";
-                saveBtn.style.display = "inline-block";
-            } else {
-                subTitle.style.display = "none";
-                subSelect.style.display = "none";
-                saveBtn.style.display = "none";
-            }
-        });
-
-        saveBtn.addEventListener("click", () => {
-            const data = {
-                main: mainSelect.value,
-                sub: subSelect.value
-            };
-            // store in localStorage
-            localStorage.setItem("userSelection", JSON.stringify(data));
-
-            result.textContent = `Saved: ${data.main} → ${data.sub}`;
-            window.location.href = "index.html";
-        });
-
+        }
     </script>
 
     <script>

@@ -14,11 +14,11 @@ window.onload = () => {
     if (mainChoice === "everything") {
       // console.log("Fetch news from source:", subChoice);
       url += mainChoice + "/" + subChoice;
-    result.textContent = "Showing results for : Source " +" -> " + subChoice
+      result.textContent = "Showing results for : Source " + " -> " + subChoice
     } else if (mainChoice === "top-headlines") {
       // console.log("Fetch top headlines for category:", subChoice);
       url += mainChoice + "/category/" + subChoice + "/in.json";
-    result.textContent = "Showing results for : " + mainChoice + " -> " + subChoice
+      result.textContent = "Showing results for : " + mainChoice + " -> " + subChoice
     }
     fetchnews(url)
   } else {
@@ -64,10 +64,17 @@ function fetchnews(url) {
         newscontent.innerText = source.content;
         newscontent.style.color = "black";
         newscontent.style.fontSize = "20px"
+        if (newscontent.innerText.length > 105) {
+          newscontent.innerText = newscontent.innerText.substr(0, 100) + "...";
+        }
+
 
         let fullnews = document.createElement("a");
         fullnews.href = source.url;
-        fullnews.textContent = "Read in Detail ..."
+        fullnews.textContent = " Read in Detail ..."
+        fullnews.style.fontSize = "20px"
+        fullnews.style.fontWeight = '900'
+        fullnews.style.margin = "10px"
 
         let img = document.createElement("img");
         img.src = source.urlToImage;
