@@ -1,6 +1,6 @@
 body{
     /* background-image: url(back.png); */
-    background-color: rgb(26, 37, 107);
+    background-color: rgba(5, 12, 54, 0.87);
 }
 
 
@@ -36,7 +36,7 @@ justify-self: center;
 #newsarea{
     margin: 20px ;
     padding: 10px;
-    background-color:rgb(41, 107, 97);
+    background-color:rgba(41, 107, 97, 0.66);
 }
 
 #footer{
