@@ -80,6 +80,7 @@
             localStorage.setItem("userSelection", JSON.stringify(data));
 
             result.textContent = `Saved: ${data.main} → ${data.sub}`;
+            window.location.href = "feed.html";
         });
 
     </script>
