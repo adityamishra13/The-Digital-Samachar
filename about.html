@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - The Digital Samachar</title>
+</head>
+
+<body>
+    <div id="navbar"></div>
+
+    <div id="title">
+        <!-- Don't miss a news -->
+        <h2>The Digital Samachar</h2>
+        <img src="back.png" alt="" id="logo">
+    </div>
+    <div id="content">
+    <p>
+        
+        The Digital Samachar is your one-stop destination for the latest news, insights, and stories that matter. We
+        bring you timely, accurate, and well-curated updates from across the globe, covering topics ranging from current
+        affairs and technology to lifestyle and culture.
+        
+    </p>
+    <p>
+
+        Our mission is simple — to keep you informed, inspired, and connected in today’s fast-paced digital world. We
+        believe news should be accessible, reliable, and engaging, so we present it in a way that’s easy to read and
+        relevant to your daily life.
+    </p>
+    <p>
+
+
+        At The Digital Samachar, we’re more than just a news portal — we’re a community of curious minds who value
+        truth, clarity, and meaningful conversations. Whether you’re here for quick headlines or in-depth stories, we’ve
+        got you covered.
+
+        Stay informed. Stay connected. Stay ahead — with The Digital Samachar.
+    </p>
+</div>
+    <div id="footer"></div>
+    <script>
+        fetch('navbar.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <script>
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
+</body>
+
+</html>
